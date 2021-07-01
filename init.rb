@@ -11,5 +11,3 @@ puts nursery_reader.recite
 puts "\n    New Nursery Rhyme"
 puts "=========================="
 puts nursery_reader.random_recite
-
-

@@ -21,7 +21,6 @@ describe Recite do
   end
   describe "#random_recite" do
     it "returns random nursery rhyme" do
-      
     end
   end
 end
