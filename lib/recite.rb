@@ -15,10 +15,10 @@ class Recite
       line = "This is "
       pointer = index
       until pointer.negative?
-        line << shuffled[pointer] + " "
+        line += shuffled[pointer] + " "
         pointer -= 1
       end
-      lines << line.chomp(" ") + ".\n"
+      lines += line.chomp(" ") + ".\n"
     end
 
     lines
