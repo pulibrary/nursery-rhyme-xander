@@ -59,7 +59,7 @@ class Recite
         line += shuffled[pointer] + " "
         pointer -= 1
       end
-      lines += line.chomp(" the house that Jack built") + ".\n"
+      lines += line.chomp(" ") + " the house that Jack built.\n"
     end
 
     lines
