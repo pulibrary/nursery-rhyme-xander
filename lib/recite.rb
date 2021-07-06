@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 class Recite
   def recite
-    File.read("lib/assets/nursery_rhyme.txt")
+    lines = File.read("lib/assets/nursery_lines.txt").split("\n")
+    build_rhyme(lines)
   end
 
   def random_recite
@@ -9,18 +10,23 @@ class Recite
     shuffled = File.read("lib/assets/nursery_lines.txt").split("\n").shuffle
 
     # construct random nursery rhyme
-    lines = ""
-    shuffled.length.times do |index|
+    build_rhyme(shuffled)
+  end
+
+  # helper to create a nursery rhyme from independent lines
+  def build_rhyme(lines)
+    rhyme = ""
+    lines.length.times do |index|
       # construct one line
       line = "This is "
       pointer = index
       until pointer.negative?
-        line += shuffled[pointer] + " "
+        line += lines[pointer] + " "
         pointer -= 1
       end
-      lines += line.chomp(" ") + ".\n"
+      rhyme += line.chomp(" ") + ".\n"
     end
 
-    lines
+    rhyme.chomp("\n")
   end
 end

@@ -1,5 +1,3 @@
-inherit_from: .rubocop_todo.yml
-
 require: rubocop-rspec
 
 inherit_gem:
@@ -15,4 +13,8 @@ RSpec/ExampleLength:
 
 Layout/LineLength:
   Exclude: 
+    - 'spec/recite_spec.rb'
+
+Metrics/BlockLength:
+  Exclude:
     - 'spec/recite_spec.rb'
