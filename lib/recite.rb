@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 class Recite
+  attr_reader :nursery_lines
+  def initialize(nursery_lines: default_lines)
+    @nursery_lines = nursery_lines
+  end
+
   def recite
-    build_rhyme(nursery_lines)
+    build_rhyme(default_lines)
   end
 
   def random_recite
@@ -13,7 +18,7 @@ class Recite
   private
 
   # helper returns array of nursery rhyme lines
-  def nursery_lines
+  def default_lines
     ["the house that Jack built",
      "the malt that lay in",
      "the rat that ate",
