@@ -10,6 +10,8 @@ class Recite
     build_rhyme(shuffled)
   end
 
+  private
+
   # helper returns array of nursery rhyme lines
   def nursery_lines
     ["the house that Jack built",
