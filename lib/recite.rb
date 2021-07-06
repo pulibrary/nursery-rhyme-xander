@@ -1,22 +1,35 @@
 # frozen_string_literal: true
 class Recite
   def recite
-    lines = File.read("lib/assets/nursery_lines.txt").split("\n")
-    build_rhyme(lines)
+    build_rhyme(nursery_lines)
   end
 
   def random_recite
     # shuffled array of phrases in the nursery rhyme
-    shuffled = File.read("lib/assets/nursery_lines.txt").split("\n").shuffle
-
-    # construct random nursery rhyme
+    shuffled = nursery_lines.shuffle
     build_rhyme(shuffled)
+  end
+
+  # helper returns array of nursery rhyme lines
+  def nursery_lines
+    ["the house that Jack built",
+     "the malt that lay in",
+     "the rat that ate",
+     "the cat that killed",
+     "the dog that worried",
+     "the cow with the crumpled horn that tossed",
+     "the maiden all forlorn that milked",
+     "the man all tattered and torn that kissed",
+     "the priest all shaven and shorn that married",
+     "the rooster that crowed in the morn that woke",
+     "the farmer sowing his corn that kept",
+     "the horse and the hound and the horn that belonged to"]
   end
 
   # helper to create a nursery rhyme from independent lines
   def build_rhyme(lines)
     rhyme = ""
-    lines.length.times do |index|
+    lines.each_index do |index|
       # construct one line
       line = "This is "
       pointer = index
