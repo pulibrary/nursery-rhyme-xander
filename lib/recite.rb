@@ -51,10 +51,9 @@ class Recite
   # @param lines [Array<String>] list of phrases
   # @return [String]
   def build_rhyme(lines)
-    reverse_lines = lines.reverse
     lines.each_index.map do |index|
       # construct one line
-      phrase = reverse_lines[(lines.length - index - 1)..-1].join(" ")
+      phrase = lines[0..index].reverse.join(" ")
       "This is #{phrase}."
     end.join("\n")
   end
