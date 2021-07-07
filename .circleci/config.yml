@@ -1,0 +1,97 @@
+---
+version: 2.1
+executors:
+  rhyme-executor:
+    docker:
+      - image: circleci/ruby:2.6.6-node-browsers
+        environment:
+          BUNDLER_VERSION: 2.2.6
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+    working_directory: ~/rhyme
+
+commands:
+  setup-bundler:
+    description: "Install correct version of bundler and load from cache or bundle install"
+    steps:
+      - run:
+          name: Configure Bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+
+      # Which version of bundler?
+      - run:
+          name: Which bundler?
+          command: bundle -v
+
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - rhyme-bundle-v3-{{ checksum "Gemfile.lock" }}
+            - rhyme-bundle-v3-
+
+      - run:
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Store bundle cache
+      - save_cache:
+          key: rhyme-bundle-v3-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+jobs:
+  build:
+    executor: rhyme-executor
+    steps:
+      - attach_workspace:
+          at: '~/rhyme'
+      - checkout
+      - setup-bundler
+
+      - persist_to_workspace:
+          root: '~/rhyme'
+          paths: '*'
+
+  test:
+    executor: rhyme-executor
+    steps:
+      - attach_workspace:
+          at: '~/rhyme'
+      - setup-bundler
+
+      # Run rspec
+      - run:
+          name: Run rspec
+          command: bundle exec rspec spec/
+
+
+      # Save test results for timing analysis
+      - store_test_results:
+          path: test_results
+
+      - persist_to_workspace:
+          root: '~/rhyme'
+          paths: '*'
+
+  rubocop:
+    executor: rhyme-executor
+    steps:
+      - attach_workspace:
+          at: '~/rhyme'
+      - setup-bundler
+      - run: bundle exec rubocop --disable-pending-cops
+
+workflows:
+  build_accept:
+    jobs:
+      - build
+      - rubocop:
+         requires:
+          - build
+      - test:
+         requires:
+          - build
