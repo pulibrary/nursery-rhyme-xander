@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'pry-byebug'
 class Recite
   attr_reader :nursery_lines
   def initialize(nursery_lines: default_lines)
@@ -15,10 +16,10 @@ class Recite
     build_rhyme(shuffled)
   end
 
-  def jack_rhyme
-    semi_shuffled = nursery_lines[1..-1].shuffle #exlude jack's house line in shuffle
-    semi_shuffled.unshift(default_lines[0])
-    build_rhyme(semi_shuffled)
+  def semi_random_recite
+    last_phrase = nursery_lines[0]
+    shuffled = nursery_lines.shuffle.reject { |phrase| phrase == last_phrase }
+    build_rhyme(shuffled.unshift(last_phrase))
   end
 
   private

@@ -3,7 +3,7 @@ APP_ROOT = File.dirname(__FILE__)
 
 require_relative('lib/recite')
 
-nursery_reader = Recite.new()
+nursery_reader = Recite.new
 
 puts "  Original Nursery Rhyme"
 puts "=========================="
@@ -15,5 +15,4 @@ puts nursery_reader.random_recite
 
 puts "\n Jack's Nursery Rhyme"
 puts "=========================="
-puts nursery_reader.jack_rhyme
-
+puts nursery_reader.semi_random_recite

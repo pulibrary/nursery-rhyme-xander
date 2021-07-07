@@ -2,4 +2,5 @@
 source "https://rubygems.org"
 
 gem 'bixby'
+gem 'pry-byebug'
 gem 'rspec', '~> 3.10'
