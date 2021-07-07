@@ -14,3 +14,7 @@ RSpec/ExampleLength:
 Layout/LineLength:
   Exclude: 
     - 'spec/recite_spec.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/recite_spec.rb'
