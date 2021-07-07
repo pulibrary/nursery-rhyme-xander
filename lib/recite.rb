@@ -32,40 +32,14 @@ class Recite
      "the farmer sowing his corn that kept",
      "the horse and the hound and the horn that belonged to"]
   end
-  
+
   # helper to create a nursery rhyme from independent lines
   def build_rhyme(lines)
-    rhyme = ""
-    lines.each_index do |index|
+    reverse_lines = lines.reverse
+    lines.each_index.map do |index|
       # construct one line
-      line = "This is "
-      pointer = index
-      until pointer.negative?
-        line += lines[pointer] + " "
-        pointer -= 1
-      end
-      rhyme += line.chomp(" ") + ".\n"
-    end
-
-    rhyme.chomp("\n")
+      phrase = reverse_lines[(lines.length - index - 1)..-1].join(" ")
+      "This is #{phrase}."
+    end.join("\n")
   end
 end
-
-# .join(" ")
-# .reverse
-
-# def build_rhyme(lines)
-#   rhyme = ""
-#   lines.each_index do |index|
-#     # construct one line
-#     line = "This is "
-#     pointer = index
-#     until pointer.negative?
-#       line += lines[pointer] + " "
-#       pointer -= 1
-#     end
-#     rhyme += line.chomp(" ") + ".\n"
-#   end
-
-#   rhyme.chomp("\n")
-# end
