@@ -9,7 +9,7 @@ class Recite
   end
 
   # Builds nursery rhyme from the phrases
-  # @return [String] 
+  # @return [String]
   def recite
     build_rhyme(nursery_lines)
   end
@@ -50,7 +50,7 @@ class Recite
 
   # Creates nursery rhyme from independent lines
   # @param lines [Array<String>] list of phrases
-  # @return [String] 
+  # @return [String]
   def build_rhyme(lines)
     reverse_lines = lines.reverse
     lines.each_index.map do |index|
