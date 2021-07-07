@@ -6,13 +6,19 @@ class Recite
   end
 
   def recite
-    build_rhyme(default_lines)
+    build_rhyme(nursery_lines)
   end
 
   def random_recite
     # shuffled array of phrases in the nursery rhyme
     shuffled = nursery_lines.shuffle
     build_rhyme(shuffled)
+  end
+
+  def jack_rhyme
+    semi_shuffled = nursery_lines[1..-1].shuffle #exlude jack's house line in shuffle
+    semi_shuffled.unshift(default_lines[0])
+    build_rhyme(semi_shuffled)
   end
 
   private
@@ -41,27 +47,5 @@ class Recite
       phrase = reverse_lines[(lines.length - index - 1)..-1].join(" ")
       "This is #{phrase}."
     end.join("\n")
-  end
-
-  def jack_rhyme
-    # shuffled array of phrases in the nursery rhyme
-    nursery_lines = File.read("lib/assets/nursery_lines.txt").split("\n")
-    shuffled = nursery_lines[1..-1].shuffle #exlude jack's house line
-
-
-    # construct random nursery rhyme
-    lines = "This is the house that Jack built.\n"
-    shuffled.length.times do |index|
-      # construct one line
-      line = "This is "
-      pointer = index
-      until pointer.negative?
-        line += shuffled[pointer] + " "
-        pointer -= 1
-      end
-      lines += line.chomp(" ") + " the house that Jack built.\n"
-    end
-
-    lines
   end
 end
