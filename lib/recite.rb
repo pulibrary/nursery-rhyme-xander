@@ -2,20 +2,28 @@
 require 'pry-byebug'
 class Recite
   attr_reader :nursery_lines
+
+  # @param nursery_lines [Array<String>] phrases in the nursery rhyme
   def initialize(nursery_lines: default_lines)
     @nursery_lines = nursery_lines
   end
 
+  # Builds nursery rhyme from the phrases
+  # @return [String] 
   def recite
     build_rhyme(nursery_lines)
   end
 
+  # Builds a random nursery rhyme from the phrases
+  # @return [String]
   def random_recite
     # shuffled array of phrases in the nursery rhyme
     shuffled = nursery_lines.shuffle
     build_rhyme(shuffled)
   end
 
+  # Builds a random nursery rhyme; each line ends in the first phrase
+  # @return [String]
   def semi_random_recite
     last_phrase = nursery_lines[0]
     shuffled = nursery_lines.shuffle.reject { |phrase| phrase == last_phrase }
@@ -40,7 +48,9 @@ class Recite
      "the horse and the hound and the horn that belonged to"]
   end
 
-  # helper to create a nursery rhyme from independent lines
+  # Creates nursery rhyme from independent lines
+  # @param lines [Array<String>] list of phrases
+  # @return [String] 
   def build_rhyme(lines)
     reverse_lines = lines.reverse
     lines.each_index.map do |index|
